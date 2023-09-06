@@ -8,9 +8,9 @@
 ## Django 사용 방법
 
 1. ### 사용 라이브러리 리스트
-    1. Django==3.2.5
-    1. elasticsearch==8.8.2
-    1. PyMySQL==1.0.2
+        Django==3.2.5
+        elasticsearch==8.8.2
+        PyMySQL==1.0.2
 
 1. ### 서버 실행
     1. `web_site` 폴더 접근
