@@ -15,3 +15,141 @@
 1. ### 서버 실행
     1. `web_site` 폴더 접근
     1. `python manage.py runserver` 실행
+
+
+---
+### 현재 프로젝트 파일 구조
+```
+RUFAS-PROJECT
+│  .gitignore
+│  README.md
+│  
+├─docker-elk
+│  │  docker-compose.yml
+│  │  LICENSE
+│  │  README.md
+│  │
+│  ├─elasticsearch
+│  │  │  Dockerfile
+│  │  │
+│  │  └─config
+│  │          elasticsearch.yml
+│  │
+│  ├─extensions
+│  │  │  README.md
+│  │  │
+│  │  ├─curator
+│  │  │  │  curator-compose.yml
+│  │  │  │  Dockerfile
+│  │  │  │  README.md
+│  │  │  │
+│  │  │  └─config
+│  │  │          curator.yml
+│  │  │          delete_log_files_curator.yml
+│  │  │
+│  │  ├─enterprise-search
+│  │  │  │  Dockerfile
+│  │  │  │  enterprise-search-compose.yml
+│  │  │  │  README.md
+│  │  │  │
+│  │  │  └─config
+│  │  │          enterprise-search.yml
+│  │  │
+│  │  ├─filebeat
+│  │  │  │  Dockerfile
+│  │  │  │  filebeat-compose.yml
+│  │  │  │  README.md
+│  │  │  │
+│  │  │  └─config
+│  │  │          filebeat.yml
+│  │  │
+│  │  ├─fleet
+│  │  │      agent-apmserver-compose.yml
+│  │  │      Dockerfile
+│  │  │      fleet-compose.yml
+│  │  │      README.md
+│  │  │
+│  │  ├─heartbeat
+│  │  │  │  Dockerfile
+│  │  │  │  heartbeat-compose.yml
+│  │  │  │  README.md
+│  │  │  │
+│  │  │  └─config
+│  │  │          heartbeat.yml
+│  │  │
+│  │  ├─logspout
+│  │  │      build.sh
+│  │  │      Dockerfile
+│  │  │      logspout-compose.yml
+│  │  │      modules.go
+│  │  │      README.md
+│  │  │
+│  │  └─metricbeat
+│  │      │  Dockerfile
+│  │      │  metricbeat-compose.yml
+│  │      │  README.md
+│  │      │
+│  │      └─config
+│  │              metricbeat.yml
+│  │
+│  ├─kibana
+│  │  │  Dockerfile
+│  │  │
+│  │  └─config
+│  │          kibana.yml
+│  │
+│  ├─logstash
+│  │  │  Dockerfile
+│  │  │
+│  │  ├─config
+│  │  │      logstash.yml
+│  │  │
+│  │  └─pipeline
+│  │          logstash.conf
+│  │
+│  └─setup
+│      │  Dockerfile
+│      │  entrypoint.sh
+│      │  lib.sh
+│      │
+│      └─roles
+│              filebeat_writer.json
+│              heartbeat_writer.json
+│              logstash_writer.json
+│              metricbeat_writer.json
+│
+├─docker-kafka
+│      docker-compose.yml
+│
+└─web_site
+    │  db.sqlite3
+    │  env_setting.py
+    │  manage.py
+    │
+    ├─rufas
+    │  │  admin.py
+    │  │  apps.py
+    │  │  models.py
+    │  │  tests.py
+    │  │  views.py
+    │  │  __init__.py
+    │  │
+    │  └─migrations
+    │          __init__.py
+    │
+    ├─templates
+    │      main-login.html
+    │
+    └─web_site
+        │  asgi.py
+        │  settings.py
+        │  urls.py
+        │  wsgi.py
+        │  __init__.py
+        │
+        └─__pycache__
+                settings.cpython-39.pyc
+                urls.cpython-39.pyc
+                wsgi.cpython-39.pyc
+                __init__.cpython-39.pyc
+```
