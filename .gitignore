@@ -8,3 +8,6 @@
 __pycache__/
 local_settings.py
 env_setting.py
+
+migrations/
+!migrations/__init__.py
