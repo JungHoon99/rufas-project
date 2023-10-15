@@ -39,9 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_famework', # drf
+    
+    'corsheaders', # CORS 관련 추가
     
     'rufas',  # APP 이름
-    'corsheaders', # CORS 관련 추가
 ]
 
 MIDDLEWARE = [
