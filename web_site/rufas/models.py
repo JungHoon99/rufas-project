@@ -4,11 +4,16 @@ import uuid
 # Create your models here.
 
 class User(models.Model):
+    USER_GENDER_LABEL = [
+        (1, "MEN"),
+        (2, "WOMEN"),
+    ]
+
     userid = models.CharField(primary_key=True, max_length=30)
     pw = models.CharField(max_length=100)
     name = models.CharField(max_length=30)
     address = models.CharField(max_length=80)
-    gender = models.IntegerField()
+    gender = models.IntegerField(choices=USER_GENDER_LABEL)
     phone = models.CharField(max_length=13)
     create_datetime = models.DateTimeField()
     update_datetime = models.DateTimeField()

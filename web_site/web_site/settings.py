@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_famework', # drf
+    'rest_framework', # drf 추가
     
     'corsheaders', # CORS 관련 추가
     
