@@ -13,6 +13,7 @@
         PyMySQL==1.0.2
         django-cors-headers==4.2.0
         djangorestframework==3.14.0
+        djangorestframework-simplejwt==5.3.0
 
 
 1. ### 서버 실행
@@ -22,7 +23,14 @@
     - model 생성 또는 변경시
         1. `python manage.py makemigrations`
         1. `python manage.py migrate`
+---
 
+1. ### 구현 기능
+#### 현재 구현 API
+- `api/signup/`
+  - `post` : 회원가입 기능 담당(`userid`, `pw1`, `pw2`, `name`, `address`, `gender`, `phone`)을 전달 받습니다.
+- `api/login/`
+  - `post` : 로그인 기능 담당(`userid`, `password`)를 전달 받습니다.
 
 ---
 ### 현재 프로젝트 파일 구조

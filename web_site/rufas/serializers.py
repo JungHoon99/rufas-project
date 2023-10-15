@@ -1,6 +1,8 @@
 ﻿from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import authenticate
 
 from rufas.models import User
 
@@ -37,7 +39,19 @@ class UserSeriailzer(serializers.ModelSerializer):
         user.save()
         return user
 
-class UserLoginSeriailzer(serializers.ModelSerializer):
+class UserLoginSeriailzer(TokenObtainPairSerializer):
+    userid = serializers.CharField(required=True)
+    password = serializers.CharField(required=True, write_only=True)
     class Meta:
         model = User
         fields = ['userid', 'pw']
+
+    def validate(self, attrs):
+        user = authenticate(**attrs)
+
+        if user:
+            data = super().validate(attrs)
+            data['user'] = user
+            return data
+        else:
+            raise serializers.ValidationError("아이디 혹은 비밀번호가 일치하지 않습니다.")
