@@ -12,10 +12,16 @@
         elasticsearch==8.8.2
         PyMySQL==1.0.2
         django-cors-headers==4.2.0
+        djangorestframework==3.14.0
+
 
 1. ### 서버 실행
     1. `web_site` 폴더 접근
     1. `python manage.py runserver` 실행
+    ---
+    - model 생성 또는 변경시
+        1. `python manage.py makemigrations`
+        1. `python manage.py migrate`
 
 
 ---
