@@ -7,7 +7,7 @@
 *.pyc
 __pycache__/
 local_settings.py
-env_setting.py
+my_setting.py
 tree.txt
 
 migrations/
