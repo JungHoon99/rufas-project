@@ -16,7 +16,7 @@ class UserSeriailzer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'pw1', 'pw2', 'username', 'gender', 'phone')
+        fields = ('email', 'pw1', 'pw2', 'username', 'gender', 'phone', 'date_of_birth')
 
     def validate(self, data):
         if data['pw1'] != data['pw2']:
@@ -29,25 +29,25 @@ class UserSeriailzer(serializers.ModelSerializer):
             email=validated_data['email'],
             username=validated_data['username'],
             gender=validated_data['gender'],
-            phone=validated_data['phone'] 
+            phone=validated_data['phone'],
+            date_of_birth=validated_data['date_of_birth']
         )
         user.set_password(validated_data['pw1'])
         user.save()
         return user
 
 class UserLoginSeriailzer(TokenObtainPairSerializer):
-    userid = serializers.CharField(required=True)
     password = serializers.CharField(required=True, write_only=True)
     class Meta:
         model = User
-        fields = ['userid', 'password']
+        fields = ['email', 'password']
 
     def validate(self, attrs):
         user = authenticate(**attrs)
 
         if user:
             data = super().validate(attrs)
-            data['user'] = user
+            data['email'] = user
             return data
         else:
             raise serializers.ValidationError("아이디 혹은 비밀번호가 일치하지 않습니다.")
