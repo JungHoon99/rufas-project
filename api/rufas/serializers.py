@@ -4,7 +4,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 
-from rufas.models import User
+from rufas.models import User, main_service
 
 class UserSeriailzer(serializers.ModelSerializer):
     pw1 = serializers.CharField(
@@ -51,3 +51,9 @@ class UserLoginSeriailzer(TokenObtainPairSerializer):
             return data
         else:
             raise serializers.ValidationError("아이디 혹은 비밀번호가 일치하지 않습니다.")
+        
+
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = main_service
+        fields = '__all__'

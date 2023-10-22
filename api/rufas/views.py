@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import status
-from rest_framework.viewsets import generics
+from rest_framework.viewsets import generics, ModelViewSet
 from rest_framework.response import Response
 
-from rufas.serializers import UserSeriailzer, UserLoginSeriailzer
+from rufas.serializers import UserSeriailzer, UserLoginSeriailzer, ServiceSerializer
 # Create your views here.
 
 class UserCreateView(generics.CreateAPIView):
@@ -33,3 +33,6 @@ class UserLoginView(generics.GenericAPIView):
         res.set_cookie("refresh", serializer.validated_data['refresh'], httponly=True)
 
         return res
+    
+class ServiceViewSet(ModelViewSet):
+    serializer_class = ServiceSerializer

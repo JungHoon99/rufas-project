@@ -72,9 +72,9 @@ class User(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
     
-class Service(models.Model):
+class main_service(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    owner = models.ForeignKey('User', models.DO_NOTHING)
+    owner = models.ForeignKey(User, models.DO_NOTHING)
     name = models.CharField(max_length=50)
     domain = models.CharField(max_length=50)
     category = models.CharField(max_length=50)
@@ -84,12 +84,11 @@ class Service(models.Model):
     update_datetime = models.DateTimeField(auto_now=True)
 
     class Meta:
-        managed = False
-        db_table = 'service'
+        managed = True
 
 
-class LoggingList(models.Model):
-    service = models.OneToOneField('Service', models.DO_NOTHING, primary_key=True)
+class loggingList(models.Model):
+    service = models.OneToOneField(main_service, models.DO_NOTHING, primary_key=True)
     click = models.IntegerField()
     scroll = models.IntegerField()
     stay_time = models.IntegerField()
@@ -101,16 +100,14 @@ class LoggingList(models.Model):
     update_datetime = models.DateTimeField(auto_now=True)
 
     class Meta:
-        managed = False
-        db_table = 'logging_list'
+        managed = True
 
 
 class Recomand(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(main_service, on_delete=models.CASCADE)
     target = models.CharField(max_length=20)
     recomand_type = models.CharField(max_length=30)
 
     class Meta:
-        managed = False
-        db_table = 'recomand'
+        managed = True
