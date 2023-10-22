@@ -4,6 +4,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 
+from secrets import token_urlsafe
+
 from rufas.models import User, main_service
 
 class UserSeriailzer(serializers.ModelSerializer):
@@ -24,7 +26,7 @@ class UserSeriailzer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        # create 요청에 대해 create 메소드를 오버라이딩, 유S저를 생성하고 토큰을 생성함.
+        # create 요청에 대해 create 메소드를 오버라이딩, 유저를 생성하고 토큰을 생성함.
         user = User.objects.create(
             email=validated_data['email'],
             username=validated_data['username'],
@@ -56,4 +58,15 @@ class UserLoginSeriailzer(TokenObtainPairSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = main_service
-        fields = '__all__'
+        fields = ['owner', 'name', 'domain', 'category', 'enabled']
+
+    def create(self, validated_data):
+        service = main_service(
+            owner=validated_data['owner'],
+            name=validated_data['name'],
+            domain=validated_data['domain'],
+            category=validated_data['category'],
+            enabled=validated_data['enabled'],
+            secret_key=token_urlsafe(16)
+        )
+        return super().create(validated_data)

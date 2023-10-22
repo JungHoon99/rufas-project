@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.viewsets import generics, ModelViewSet
 from rest_framework.response import Response
 
+from rufas.models import main_service
+
 from rufas.serializers import UserSeriailzer, UserLoginSeriailzer, ServiceSerializer
 # Create your views here.
 
@@ -36,3 +38,4 @@ class UserLoginView(generics.GenericAPIView):
     
 class ServiceViewSet(ModelViewSet):
     serializer_class = ServiceSerializer
+    queryset = main_service.objects.all()

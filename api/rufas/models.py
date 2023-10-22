@@ -78,8 +78,8 @@ class main_service(models.Model):
     name = models.CharField(max_length=50)
     domain = models.CharField(max_length=50)
     category = models.CharField(max_length=50)
-    secret_key = models.CharField(max_length=40)
-    enabled = models.IntegerField()
+    secret_key = models.CharField(max_length=17)
+    enabled = models.BooleanField(default=False)
     create_datetime = models.DateTimeField(auto_now_add=True)
     update_datetime = models.DateTimeField(auto_now=True)
 
