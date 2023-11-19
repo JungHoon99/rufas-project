@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
-import my_setting
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = my_setting.SECRET_KEY
+SECRET_KEY = 'django-insecure-$eb#ea(6(n4vpf_7(s!jo_6q2a66p%hzz2l@p*b725&zy7hoe6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +30,17 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'rufas.User'
 
+NEOMODEL_NEO4J_BOLT_URL = os.environ.get('NEO4J_BOLT_URL', 'bolt://neo4j:1q2w3e4r!@localhost:7687')
+NEOMODEL_SIGNALS = True
+NEOMODEL_FORCE_TIMEZONE = False
+NEOMODEL_MAX_CONNECTION_POOL_SIZE = 50
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
 
 # Application definition
 
@@ -42,8 +52,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'neo4j',
+    'django_neomodel',
+
     'rest_framework',
+    'rest_framework_simplejwt',
     'rufas',
+    'recomands',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +95,30 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = my_setting.DATABASES
+DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql', #1
+    #     'NAME': 'rufas', #2
+    #     'USER': 'root', #3                      
+    #     'PASSWORD': '1234',  #4              
+    #     'HOST': 'localhost',   #5                
+    #     'PORT': '3306', #6
+    # },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    # 'neo4j': {
+    #     'ENGINE': 'django_neomodel.backends.neo4j',
+    #     'NAME': 'neo4j',
+    #     'BOLT_PORT': 7687,
+    #     'BOLT_CONNECTION_TIMEOUT': 1000,
+    #     'MAX_CONNECTION_POOL_SIZE': 50,
+    #     'VERSION': (4, 3),
+    #     'USER': 'rufas',
+    #     'PASSWORD': '1q2w3e4r!',
+    # },
+}
 
 
 # Password validation
@@ -112,7 +150,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
