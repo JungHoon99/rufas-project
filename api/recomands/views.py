@@ -5,8 +5,12 @@ from rest_framework.response import Response
 from recomands.models import UserNode, ItemNode, Recommendation, RatingNode
 from recomands.serializers import CreateUserItemWithRatingSerializer
 import json
+import numpy as np
 
 from neomodel import db
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
 
 def calculate_similarity(user1, user2):
     if user1.username == user2.username:
@@ -116,7 +120,14 @@ class CreateUserItemWithRatingView(APIView):
 class track(APIView):
     def post(self, request, *args, **kwargs):
         s = json.loads(request.body.decode('utf-8'))
+        if("http://127.0.0.1:8080/mall/" in s['링크']):
+            s['링크'] = s['링크'].replace("http://127.0.0.1:8080/mall/", "")
+        
+        if("http://127.0.0.1:8080/mall/" in s['링크 클릭']):
+            s['링크 클릭'] = s['링크 클릭'].replace("http://127.0.0.1:8080/mall/", "")
+        
         print(s)
+
         return Response({"recommendations": s})
     
     def options(self, request, *args, **kwargs):
