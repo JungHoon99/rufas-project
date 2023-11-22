@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$eb#ea(6(n4vpf_7(s!jo_6q2a66p%hzz2l@p*b725&zy7hoe6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'rufas.User'
 
@@ -41,6 +41,9 @@ CACHES = {
         'LOCATION': 'my_cache_table',
     }
 }
+
+CORS_ORIGIN_ALLOW_ALL=True # <- 모든 호스트 허용
+CORS_ALLOW_CREDENTIALS = True # <-쿠키가 cross-site HTTP 요청에 포함될 수 있다
 
 # Application definition
 
@@ -59,9 +62,12 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rufas',
     'recomands',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', 
+    'django.middleware.common.CommonMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from recomands.models import UserNode, ItemNode, Recommendation, RatingNode
 from recomands.serializers import CreateUserItemWithRatingSerializer
+import json
 
 from neomodel import db
 
@@ -35,7 +36,6 @@ def calculate_similarity(user1, user2):
     similarity = 0.7 * jaccard_similarity + 0.3 * weighted_similarity
     
     return similarity
-
 
 
 class RecommendationView(APIView):
@@ -112,3 +112,13 @@ class CreateUserItemWithRatingView(APIView):
         rating_relationship.item.connect(new_item)
 
         return Response(status=status.HTTP_201_CREATED)
+    
+class track(APIView):
+    def post(self, request, *args, **kwargs):
+        s = json.loads(request.body.decode('utf-8'))
+        print(s)
+        return Response({"recommendations": s})
+    
+    def options(self, request, *args, **kwargs):
+        print(request.body)
+        return super().options(request, *args, **kwargs)
